@@ -31,7 +31,13 @@ function calculateWinner(squares) {
   }
   return null; 
 }
-  
+
+function boardFull(squares) {
+  for (let i = 0; i < squares.length; i++) {
+    if (squares[i] == null) return false;
+  }
+  return true;
+}
 
 function Board() {
   const [xIsNext, setXIsNext] = useState(true);
@@ -51,12 +57,16 @@ function Board() {
   }
 
   const winner = calculateWinner(squares);
+  const full = boardFull(squares);
   let status;
   if (winner){
-    status = 'Winner' + winner;
+    status = 'Winner: ' + winner;
   }
   else{
-    status = 'Next player' + (xIsNext ? 'X':'O');
+    status = 'Next player: ' + (xIsNext ? 'X':'O');
+  }
+  if (!winner && full) {
+    status = "Game over. No winner.";
   }
 
   return (
